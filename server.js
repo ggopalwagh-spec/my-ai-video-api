@@ -10,8 +10,7 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.json({
     name: "Gopal AI API",
-    status: "Running",
-    message: "Welcome to Gopal AI"
+    status: "Running"
   });
 });
 
@@ -22,18 +21,20 @@ app.get("/api/status", (req, res) => {
   });
 });
 
+// Caption API
 app.post("/api/caption", (req, res) => {
-  const { text } = req.body;
+  const { text, language } = req.body;
 
   if (!text) {
     return res.status(400).json({
       success: false,
-      message: "Please provide text"
+      message: "Text is required"
     });
   }
 
   res.json({
     success: true,
+    language: language || "Hindi",
     caption: text
   });
 });
@@ -41,5 +42,5 @@ app.post("/api/caption", (req, res) => {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`Gopal AI API running on port ${PORT}`);
+  console.log("Gopal AI API running on port " + PORT);
 });
